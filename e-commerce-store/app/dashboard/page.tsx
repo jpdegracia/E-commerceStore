@@ -78,10 +78,10 @@ export default async function DashboardPage() {
               backgroundSize: 'cover'
             }}>
               <h1 className="display-5 fw-bold text-white mb-3" style={{ fontFamily: "'Anton', sans-serif" }}>
-                Welcome back, Pilot {user.name}!
+                Welcome back, Pilot {user.username}!
               </h1>
               <p className="lead text-light mb-0">
-                Authentication confirmed. Clearance level: <span className={user.roles === "ADMIN" ? "text-warning fw-bold" : "text-success fw-bold"}>{user.roles}</span>.
+                Authentication confirmed.
               </p>
             </div>
           </div>

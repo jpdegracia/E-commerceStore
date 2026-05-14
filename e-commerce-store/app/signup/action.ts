@@ -8,6 +8,7 @@ export async function registerCustomer(form: FormData) {
     const name = form.get("name") as string;
     const email = form.get("email") as string;
     const password = form.get("password") as string;
+    const username = form.get("username") as string; // 🚀 Grab the username
     
     // Securely hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -17,6 +18,7 @@ export async function registerCustomer(form: FormData) {
         data: {
             name,
             email,
+            username,
             password: hashedPassword,
         },
     });

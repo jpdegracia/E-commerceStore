@@ -28,6 +28,17 @@ export default function SignUpPage() {
               required 
             />
           </div>
+
+          <div className="mb-3">
+            <label className="form-label text-light fw-bold">Username</label>
+            <input 
+              type="text" 
+              name="username" 
+              placeholder="AgentX44"
+              className="form-control bg-secondary text-white border-0" 
+              required 
+            />
+          </div>
           
           <div className="mb-3">
             <label className="form-label text-light fw-bold">Email Address</label>
