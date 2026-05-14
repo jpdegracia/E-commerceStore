@@ -22,5 +22,5 @@ export async function registerCustomer(form: FormData) {
     });
 
     // Send them back to the landing page so they can start shopping!
-    redirect("/");
+    redirect("/dashboard");
 }

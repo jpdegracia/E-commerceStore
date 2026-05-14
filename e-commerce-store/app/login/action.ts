@@ -36,5 +36,5 @@ export async function loginCustomer(form: FormData) {
   });
 
   // 4. Send them back to the shop
-  redirect("/");
+  redirect("/dashboard");
 }

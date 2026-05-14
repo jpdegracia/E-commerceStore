@@ -45,15 +45,15 @@ export default function LoginPage() {
             className="btn w-100 fw-bold py-2 mb-3" 
             style={{ background: '#1974D2', color: 'white', borderRadius: '50px' }}
           >
-            Launch / Login
+            Login
           </button>
           
           <div className="text-center mt-3 d-flex flex-column gap-2">
             <Link href="/signup" className="text-warning text-decoration-none small fw-bold">
               Need an account? Enlist here.
             </Link>
-            <Link href="/" className="text-muted text-decoration-none small">
-              &larr; Back to Base
+            <Link href="/" className="text-decoration-none small">
+              &larr; Back
             </Link>
           </div>
         </form>
