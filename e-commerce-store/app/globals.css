@@ -1,26 +1,119 @@
-@import "tailwindcss";
+/* Import all your Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;500;800&family=Press+Start+2P&family=Roboto+Condensed:wght@400;700&family=Rock+Salt&display=swap');
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* General Styles */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden; /* Prevents side-scrolling on mobile */
+}
+
+#navBar {
+    font-family: 'Montserrat', sans-serif;
+    background: #2c3e50; /* Darker, more modern professional look */
+}
+
+/* Hero Section */
+#hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                url("https://www.chromethemer.com/download/hd-wallpapers/gundam-3840x2160.jpg");
+    background-size: cover;
+    background-position: center;
+    min-height: 80vh; /* Responsive height */
+    padding: 60px 0;
+}
+
+/* Typing Effect Fix */
+#title {
+    font-family: "Press Start 2P", cursive;
+    font-size: clamp(1.5rem, 5vw, 2.5rem); /* Scales based on screen size */
+    color: #ffd700; /* Gold looks great on dark mecha themes */
+    border-right: 4px solid white;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    animation: typing 3s steps(20, end) forwards, blink 0.7s infinite;
+}
+
+#title2 {
+    font-family: 'Anton', sans-serif;
+    font-size: 1.25rem;
+    color: #FFFFFF;
+    max-width: 600px; /* Limits width but allows it to be smaller on mobile */
+}
+
+/* Action Button */
+#base {
+    background: #1974D2;
+    padding: 12px 35px;
+    border-radius: 50px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    color: #FFFFFF;
+    transition: 0.3s;
+    display: inline-block;
+}
+
+#base:hover {
+    background: #145da0;
+    transform: translateY(-3px);
+}
+
+/* Why Choose Us Section */
+#heading {
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+                url("https://img.freepik.com/free-vector/gradient-tech-futuristic-background_52683-74267.jpg");
+    background-size: cover;
+    min-height: auto; /* Allow content to dictate height on mobile */
+}
+
+#text-title, .text2 {
+    font-family: 'Roboto Condensed', sans-serif;
+    text-transform: uppercase;
+}
+
+.text {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1.1rem;
+}
+
+.rock-salt-regular {
+    font-family: "Rock Salt", cursive;
+    color: #333;
+}
+
+/* Icon sizing */
+.icon-sm {
+    width: 18px;
+    height: 18px;
+}
+
+/* Specific styling for the 'Why Choose Us' list icons */
+.lucide {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Animations */
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink {
+    50% { border-color: transparent; }
+}
+
+/* Mobile Specific Tweaks */
+@media (max-width: 768px) {
+    #title {
+        white-space: normal; /* Allows wrapping on small screens */
+        border-right: none;
+        animation: none; /* Typing effect is buggy if text wraps */
+    }
+    
+    #hero {
+        text-align: center;
+        min-height: 60vh;
+    }
 }
