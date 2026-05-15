@@ -1,24 +1,22 @@
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { prisma } from "../lib/db";
-import Link from "next/link";
-// Removed ShieldCheck from imports since we don't need it anymore
-import { ShoppingCart, User as UserIcon, LogOut, Users } from "lucide-react";
-import { disconnectPilot } from "../logout/action";
+import { getServerSession } from "next-auth";
+// 🚀 Import your NextAuth config
+import { authOptions } from "../api/auth/[...nextauth]/route";
 
 export default async function DashboardPage() {
-  // 1. Get the session cookie
-  const cookieStore = await cookies();
-  const userIdCookie = cookieStore.get("pilot_session");
+  // 1. Get the session securely via NextAuth
+  const session = await getServerSession(authOptions);
 
-  // 2. If there is no cookie, kick them out to the login page
-  if (!userIdCookie) {
+  // 2. If there is no session, kick them out to the login page
+  if (!session?.user?.id) {
     redirect("/login");
   }
 
-  // 3. Fetch the logged-in user's details
+  // 3. Fetch the logged-in user's details using the NextAuth session ID
+  // (We use parseInt because we converted the ID to a string in the JWT token!)
   const user = await prisma.user.findUnique({
-    where: { id: parseInt(userIdCookie.value) },
+    where: { id: parseInt(session.user.id) },
   });
 
   if (!user) {
@@ -26,50 +24,13 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="min-vh-100 bg-dark text-white pt-5" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-      {/* 🚀 TOP NAVBAR 🚀 */}
-      <nav className="navbar navbar-expand navbar-dark bg-dark border-bottom border-secondary fixed-top">
-        <div className="container">
-          {/* Haven System acts as the home/product hub now */}
-          <Link href="/dashboard" className="navbar-brand fw-bold text-warning text-decoration-none" style={{ fontFamily: '"Press Start 2P", cursive', fontSize: '1rem' }}>
-            HAVEN SYSTEM
-          </Link>
-
-          {/* Right side navigation items */}
-          <div className="d-flex align-items-center gap-3 gap-md-4 ms-auto">
-            
-            <Link href="/orders" className="text-warning text-decoration-none" title="Active Hangar (Orders)">
-              <ShoppingCart size={24} />
-            </Link>
-            
-            <Link href="/profile" className="text-info text-decoration-none" title="Pilot Profile">
-              <UserIcon size={24} />
-            </Link>
-
-            {/* 🔵 ADMIN ONLY BUTTON 🔵 (Changed to primary blue instead of red) */}
-            {user.roles === "ADMIN" && (
-              <Link href="/users" className="btn btn-primary btn-sm fw-bold d-flex align-items-center gap-2">
-                <Users size={16} /> 
-                <span className="d-none d-md-inline">Manage Users</span>
-              </Link>
-            )}
-
-            {/* Vertical Divider */}
-            <div className="vr bg-secondary mx-1" style={{ width: '2px', height: '24px' }}></div>
-
-            {/* Disconnect Button */}
-            <form action={disconnectPilot}>
-              <button type="submit" className="btn btn-outline-danger btn-sm d-flex align-items-center gap-2">
-                <LogOut size={16} /> 
-                <span className="d-none d-md-inline">Disconnect</span>
-              </button>
-            </form>
-          </div>
-        </div>
-      </nav>
+    // Removed the pt-5 here because the layout.tsx is now handling the top padding!
+    <div className="min-vh-100 bg-dark text-white" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+      
+      {/* 🚀 Deleted the hardcoded Navbar from here because layout.tsx handles it now! 🚀 */}
 
       {/* Main Dashboard Content */}
-      <div className="container mt-5 pt-4">
+      <div className="container">
         {/* Welcome Banner */}
         <div className="row mb-4">
           <div className="col-12">

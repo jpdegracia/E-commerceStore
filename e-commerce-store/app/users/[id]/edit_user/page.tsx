@@ -46,53 +46,53 @@ export default async function updateUserPage({ params }: { params: Promise<{ id:
             <input type="hidden" name="id" value={user.id} />
 
             <div className="mb-3">
-              <label className="form-label fw-bold text-light">Full Name</label>
+              <label className="form-label fw-bold text-light">Full Name <span className="text-danger">*</span></label>
               <input 
                 type="text" 
                 name="name" 
                 defaultValue={user.name || ""} 
-                className="form-control bg-dark text-white border-secondary" 
+                className="form-control bg-white text-dark border-secondary" 
                 required 
               />
             </div>
 
             <div className="mb-3">
-              <label className="form-label fw-bold text-light">Pilot Callsign (Username)</label>
+              <label className="form-label fw-bold text-light">Username <span className="text-danger">*</span></label>
               <input 
                 type="text" 
                 name="username" 
                 defaultValue={user.username || ""} 
-                className="form-control bg-dark text-warning border-secondary fw-bold" 
+                className="form-control bg-white text-warning border-secondary fw-bold" 
                 required 
               />
             </div>
             
             <div className="mb-3">
-              <label className="form-label fw-bold text-light">Email Address</label>
+              <label className="form-label fw-bold text-light">Email Address <span className="text-danger">*</span></label>
               <input 
                 type="email" 
                 name="email" 
                 defaultValue={user.email || ""} 
-                className="form-control bg-dark text-white border-secondary" 
+                className="form-control bg-white text-dark border-secondary" 
                 required 
               />
             </div>
 
             {/* Clearance Level / Role Selector */}
             <div className="mb-4">
-              <label className="form-label fw-bold text-light">Clearance Level (Role)</label>
+              <label className="form-label fw-bold text-light">Role <span className="text-danger">*</span></label>
               <select 
                 name="roles" 
                 defaultValue={user.roles || "USER"} 
-                className="form-select bg-dark text-white border-secondary"
+                className="form-select bg-white text-dark border-secondary"
               >
-                <option value="USER">USER (Standard Pilot)</option>
-                <option value="ADMIN">ADMIN (System Commander)</option>
+                <option value="USER">USER</option>
+                <option value="ADMIN">ADMIN</option>
               </select>
             </div>
 
             <button type="submit" className="btn btn-info w-100 fw-bold py-2 text-dark">
-              Update Pilot Records
+              Update 
             </button>
             
           </form>

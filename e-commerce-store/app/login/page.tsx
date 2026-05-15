@@ -1,20 +1,29 @@
 "use client"; 
 
 import Link from "next/link";
-import { useState } from "react";
-import { loginCustomer } from "./action";
+import { useState, useEffect } from "react";
+import { signIn, useSession } from "next-auth/react"; 
+import { useRouter } from "next/navigation"; 
 import toast, { Toaster } from "react-hot-toast";
 import { Eye, EyeOff } from "lucide-react"; 
 
 export default function LoginPage() {
-  // Track form inputs
+  const router = useRouter();
+  const { status } = useSession(); 
+  
   const [formValues, setFormValues] = useState({
     email: "",
     password: ""
   });
 
-  // Track password visibility
   const [showPassword, setShowPassword] = useState(false);
+
+  // If they are already logged in when they hit the page, kick them to dashboard
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/dashboard");
+    }
+  }, [status, router]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormValues({
@@ -23,25 +32,32 @@ export default function LoginPage() {
     });
   };
 
-  const handleClientAction = async (formData: FormData) => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault(); 
     const loadingToast = toast.loading("Verifying credentials...");
 
-    const result = await loginCustomer(formData);
+    const result = await signIn("credentials", {
+      redirect: false, 
+      email: formValues.email,
+      password: formValues.password,
+    });
 
     if (result?.error) {
       toast.error(result.error, { id: loadingToast });
-      
-      // If a specific field caused the error, clear ONLY that field
-      if (result.field && result.field !== "all") {
-        setFormValues((prev) => ({
-          ...prev,
-          [result.field]: "" 
-        }));
-      }
+      setFormValues((prev) => ({
+        ...prev,
+        password: "" 
+      }));
     } else {
       toast.success("Login successful! Welcome back.", { id: loadingToast });
+      router.push("/dashboard");
+      router.refresh(); 
     }
   };
+
+  if (status === "loading" || status === "authenticated") {
+    return <div className="min-vh-100 bg-dark"></div>;
+  }
 
   return (
     <div 
@@ -60,7 +76,7 @@ export default function LoginPage() {
           SYSTEM LOGIN
         </h2>
         
-        <form action={handleClientAction}>
+        <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label className="form-label text-light fw-bold">Email: Address <span className="text-danger">*</span></label>
             <input 
@@ -75,7 +91,13 @@ export default function LoginPage() {
           </div>
           
           <div className="mb-4">
-            <label className="form-label text-light fw-bold">Password: <span className="text-danger">*</span></label>
+            {/* 🚀 Updated Label Area: Added Forgot Password Link */}
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <label className="form-label text-light fw-bold mb-0">Password: <span className="text-danger">*</span></label>
+              <Link href="/forgot_password" className="text-info text-decoration-none small">
+                Forgot Password?
+              </Link>
+            </div>
             <div className="position-relative">
               <input 
                 type={showPassword ? "text" : "password"} 

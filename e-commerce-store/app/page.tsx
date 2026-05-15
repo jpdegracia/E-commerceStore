@@ -3,12 +3,29 @@
 import Link from "next/link";
 import { ShieldCheck, Flame, PackageCheck, Wrench } from "lucide-react";
 import { useEffect } from "react";
+import { useSession } from "next-auth/react"; // 🚀 Import useSession
+import { useRouter } from "next/navigation"; // 🚀 Import useRouter
 
 export default function Home() {
-  // This safely loads the Bootstrap JavaScript on the client side for your Carousel and Navbar toggler
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  // 🚀 Redirect to dashboard if already logged in
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/dashboard");
+    }
+  }, [status, router]);
+
   useEffect(() => {
     import("bootstrap/dist/js/bootstrap.bundle.min.js" as any);
   }, []);
+
+  // While checking auth status, show nothing or a loading spinner 
+  // so the landing page doesn't "flicker" before redirecting
+  if (status === "loading" || status === "authenticated") {
+    return <div className="min-vh-100 bg-dark"></div>; 
+  }
 
   return (
     <>
@@ -25,10 +42,8 @@ export default function Home() {
               <Link className="nav-link" href="#zoids">Zoids</Link>
               <Link className="nav-link" href="#gundams">Gundams</Link>
               <Link className="nav-link" href="#faqs">FAQS</Link>
-              {/* Pointing this login button to the Admin CRUD you built! */}
               <Link className="nav-link btn btn-primary btn-sm ms-lg-3 text-white px-3" href="/login">Login</Link>
               <Link className="nav-link btn btn-primary btn-sm ms-lg-3 text-white px-3" href="/signup">Sign Up</Link>
-
             </div>  
           </div>
         </div>

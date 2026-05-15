@@ -31,7 +31,7 @@ export default function NewUserPage() {
               <input 
                 type="text" 
                 name="name" 
-                className="form-control bg-dark text-white border-secondary" 
+                className="form-control bg-white text-white border-secondary" 
                 required 
                 placeholder="e.g., Heero Yuy" 
               />
@@ -42,7 +42,7 @@ export default function NewUserPage() {
               <input 
                 type="text" 
                 name="username" 
-                className="form-control bg-dark text-white border-secondary" 
+                className="form-control bg-white text-white border-secondary" 
                 required 
                 placeholder="GundamPilot99" 
               />
@@ -53,7 +53,7 @@ export default function NewUserPage() {
               <input 
                 type="email" 
                 name="email" 
-                className="form-control bg-dark text-white border-secondary" 
+                className="form-control bg-white text-white border-secondary" 
                 required 
                 placeholder="pilot@colony.com" 
               />
@@ -64,7 +64,7 @@ export default function NewUserPage() {
               <input 
                 type="password" 
                 name="password" 
-                className="form-control bg-dark text-white border-secondary" 
+                className="form-control bg-white text-white border-secondary" 
                 required 
                 placeholder="••••••••" 
               />
