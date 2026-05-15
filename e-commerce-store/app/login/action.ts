@@ -14,15 +14,14 @@ export async function loginCustomer(form: FormData) {
   });
 
   if (!user) {
-    // If no user is found, stop the process
-    throw new Error("Pilot not found! Please check your email.");
+    return { error: "Invalid credentials. Please try again.", field: "email" };
   }
 
   // 2. Compare the typed password with the hashed password in the DB
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
   if (!isPasswordValid) {
-    throw new Error("Access Denied: Incorrect password.");
+    return { error: "Invalid credentials. Please try again.", field: "password" };
   }
 
   // 3. Success! AWAIT the cookies, then set a secure session

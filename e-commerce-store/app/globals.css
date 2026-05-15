@@ -94,6 +94,32 @@ body {
     vertical-align: middle;
 }
 
+.btn-lively {
+  background-color: #1974D2 !important;
+  color: white !important;
+  border-radius: 30px !important;
+  border: none;
+  transition: all 0.3s ease;
+  text-decoration: none; /* Ensures the Cancel link doesn't get an underline */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-lively:hover {
+  background-color: #145ca8 !important; /* Slightly darker blue */
+  color: white !important;
+  transform: translateY(-3px); /* Lifts the button up slightly */
+  box-shadow: 0 8px 15px rgba(25, 116, 210, 0.4); /* Adds a glowing shadow */
+}
+
+.btn-lively:active {
+  transform: translateY(1px); /* Pushes the button down when clicked */
+  box-shadow: 0 4px 10px rgba(25, 116, 210, 0.4);
+}
+
+
+
 /* Animations */
 @keyframes typing {
     from { width: 0; }
