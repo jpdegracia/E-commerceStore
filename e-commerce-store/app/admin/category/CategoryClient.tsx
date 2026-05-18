@@ -9,6 +9,7 @@ type CategoryWithCount = {
   id: number;
   name: string;
   description: string;
+  image: string;
   _count: {
     products: number;
   };
@@ -48,7 +49,8 @@ export default function CategoryClient({ initialCategories }: { initialCategorie
             <table className="table table-dark table-hover mb-0">
               <thead className="text-white small text-uppercase">
                 <tr>
-                  <th className="ps-4">Name</th>
+                  <th className="ps-4">Image</th>
+                  <th className="">Name</th>
                   <th>Description</th>
                   <th>Assigned Units</th>
                   <th className="text-end pe-4">Actions</th>
@@ -62,6 +64,13 @@ export default function CategoryClient({ initialCategories }: { initialCategorie
                 ) : (
                   initialCategories.map((cat) => (
                     <tr key={cat.id} className="align-middle">
+                      <td className="ps-4 py-3">
+                        <img 
+                          src={cat.image} 
+                          alt={cat.name} 
+                          style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '4px' }} 
+                        />
+                      </td>
                       <td className="ps-4 py-3 fw-bold text-info">{cat.name}</td>
                       <td className="text-white small">{cat.description}</td>
                       <td>

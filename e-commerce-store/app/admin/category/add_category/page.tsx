@@ -69,6 +69,20 @@ export default function AddCategoryPage() {
                   required 
                 />
               </div>
+
+              <div className="mb-4">
+                <label className="form-label small fw-bold text-white text-uppercase mb-2">Cover Image URL</label>
+                <input 
+                  type="url" 
+                  name="image" 
+                  placeholder="https://..."
+                  className="form-control bg-dark text-white border-secondary py-2 px-3" 
+                  style={{ transition: 'border-color 0.2s', outline: 'none' }}
+                  onFocus={(e) => e.target.style.borderColor = '#0dcaf0'}
+                  onBlur={(e) => e.target.style.borderColor = '#6c757d'}
+                  required 
+                />
+              </div>
               
               <div className="mb-5">
                 <label className="form-label small fw-bold text-white text-uppercase mb-2">Description</label>

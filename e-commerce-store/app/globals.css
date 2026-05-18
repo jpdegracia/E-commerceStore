@@ -186,6 +186,15 @@ body {
   padding-left: 1.5rem !important;
 }
 
+.crm-hover-lift {
+  transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.2s ease-in-out;
+}
+
+.crm-hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5) !important;
+}
+
 
 
 /* Animations */
