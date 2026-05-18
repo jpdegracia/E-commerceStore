@@ -31,14 +31,14 @@ export default async function AdminDashboard() {
 
   // 🚀 Fetch Latest 10 Pilot Signups
   const recentUsers = await prisma.user.findMany({
-    take: 10,
+    take: 5,
     orderBy: { createdAt: "desc" },
     select: { id: true, username: true, email: true, createdAt: true, roles: true }
   });
 
   // 🚀 Fetch Latest 10 Hangar Additions
   const recentProducts = await prisma.product.findMany({
-    take: 10,
+    take: 5,
     orderBy: { createdAt: "desc" },
     include: { category: true }
   });
@@ -173,11 +173,12 @@ export default async function AdminDashboard() {
                       {recentProducts.length === 0 ? (
                         <tr><td colSpan={4} className="text-center py-4 ">No units registered yet.</td></tr>
                       ) : (
-                        recentProducts.map(product => (
+                        // 🚀 Added .slice(0, 5) right here!
+                        recentProducts.slice(0, 5).map(product => (
                           <tr key={product.id} className="align-middle">
                             <td className="ps-4 py-3 fw-bold">{product.name}</td>
                             <td><span className="badge bg-dark border border-secondary text-info">{product.category.name}</span></td>
-                            <td>{product.price} CR</td>
+                            <td>{product.price} PHP</td>
                             <td>
                               <span className={`badge ${product.stock > 0 ? 'bg-success' : 'bg-danger'}`}>
                                 {product.stock > 0 ? `${product.stock} Units` : 'Out of Stock'}
