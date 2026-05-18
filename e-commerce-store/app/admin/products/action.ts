@@ -37,6 +37,32 @@ export async function addProduct(formData: FormData) {
   }
 }
 
+export async function updateProduct(id: number, formData: FormData) {
+  try {
+    const name = formData.get("name") as string;
+    const description = formData.get("description") as string;
+    const price = parseInt(formData.get("price") as string);
+    const stock = parseInt(formData.get("stock") as string);
+    const categoryId = parseInt(formData.get("categoryId") as string);
+    const image = formData.get("image") as string;
+
+    if (!name || !description || isNaN(price) || isNaN(categoryId) || !image) {
+      return { error: "All fields are required." };
+    }
+
+    await prisma.product.update({
+      where: { id },
+      data: { name, description, price, stock: isNaN(stock) ? 0 : stock, categoryId, image },
+    });
+
+    revalidatePath("/admin/products"); 
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to update product:", error);
+    return { error: "Database error while updating unit." };
+  }
+}
+
 export async function deleteProduct(id: number) {
   try {
     await prisma.product.delete({

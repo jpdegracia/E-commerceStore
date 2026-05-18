@@ -65,68 +65,77 @@ export default async function AdminDashboard() {
 
         {/* TOP ROW: KPI Metrics */}
         <div className="row g-3 mb-4">
+
           <div className="col-xl-3 col-md-6">
-            <div className="card crm-card bg-secondary text-white border-0 shadow-sm rounded-3 h-100">
-              <div className="card-body p-4">
-                <div className="d-flex justify-content-between align-items-start">
-                  <div>
-                    <h6 className=" text-uppercase fw-bold mb-2" style={{ fontSize: '0.75rem', letterSpacing: '1px' }}>Total Pilots</h6>
-                    <h2 className="mb-0 fw-bold">{totalUsers}</h2>
-                  </div>
-                  <div className="bg-primary p-2 rounded text-white shadow-sm">
-                    <Users size={20} />
+            <Link href="/admin/users" className="text-decoration-none">
+              <div className="card crm-card bg-secondary text-white border-0 shadow-sm rounded-3 h-100">
+                <div className="card-body p-4">
+                  <div className="d-flex justify-content-between align-items-start">
+                    <div>
+                      <h6 className=" text-uppercase fw-bold mb-2" style={{ fontSize: '0.75rem', letterSpacing: '1px' }}>Total Users</h6>
+                      <h2 className="mb-0 fw-bold">{totalUsers}</h2>
+                    </div>
+                    <div className="bg-primary p-2 rounded text-white shadow-sm">
+                      <Users size={20} />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
 
           <div className="col-xl-3 col-md-6">
-            <div className="card crm-card bg-secondary text-white border-0 shadow-sm rounded-3 h-100">
-              <div className="card-body p-4">
-                <div className="d-flex justify-content-between align-items-start">
-                  <div>
-                    <h6 className=" text-uppercase fw-bold mb-2" style={{ fontSize: '0.75rem', letterSpacing: '1px' }}>Hangar Units</h6>
-                    <h2 className="mb-0 fw-bold">{totalProducts}</h2>
-                  </div>
-                  <div className="bg-success p-2 rounded text-white shadow-sm">
-                    <Package size={20} />
+            <Link href="/admin/products" className="text-decoration-none">
+              <div className="card crm-card bg-secondary text-white border-0 shadow-sm rounded-3 h-100">
+                <div className="card-body p-4">
+                  <div className="d-flex justify-content-between align-items-start">
+                    <div>
+                      <h6 className=" text-uppercase fw-bold mb-2" style={{ fontSize: '0.75rem', letterSpacing: '1px' }}>Products</h6>
+                      <h2 className="mb-0 fw-bold">{totalProducts}</h2>
+                    </div>
+                    <div className="bg-success p-2 rounded text-white shadow-sm">
+                      <Package size={20} />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
 
           <div className="col-xl-3 col-md-6">
-            <div className="card crm-card bg-secondary text-white border-0 shadow-sm rounded-3 h-100">
-              <div className="card-body p-4">
-                <div className="d-flex justify-content-between align-items-start">
-                  <div>
-                    <h6 className=" text-uppercase fw-bold mb-2" style={{ fontSize: '0.75rem', letterSpacing: '1px' }}>Categories</h6>
-                    <h2 className="mb-0 fw-bold">{totalCategories}</h2>
-                  </div>
-                  <div className="bg-info p-2 rounded text-dark shadow-sm">
-                    <Tags size={20} />
+            <Link href="/admin/category" className="text-decoration-none">
+              <div className="card crm-card bg-secondary text-white border-0 shadow-sm rounded-3 h-100">
+                <div className="card-body p-4">
+                  <div className="d-flex justify-content-between align-items-start">
+                    <div>
+                      <h6 className=" text-uppercase fw-bold mb-2" style={{ fontSize: '0.75rem', letterSpacing: '1px' }}>Categories</h6>
+                      <h2 className="mb-0 fw-bold">{totalCategories}</h2>
+                    </div>
+                    <div className="bg-info p-2 rounded text-dark shadow-sm">
+                      <Tags size={20} />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
 
           <div className="col-xl-3 col-md-6">
-            <div className="card crm-card bg-secondary text-white border-0 shadow-sm rounded-3 h-100">
-              <div className="card-body p-4">
-                <div className="d-flex justify-content-between align-items-start">
-                  <div>
-                    <h6 className=" text-uppercase fw-bold mb-2" style={{ fontSize: '0.75rem', letterSpacing: '1px' }}>Pending Orders</h6>
-                    <h2 className="mb-0 fw-bold text-warning">{totalOrders}</h2>
-                  </div>
-                  <div className="bg-warning p-2 rounded text-dark shadow-sm">
-                    <ShoppingCart size={20} />
+            <Link href="/admin/orders" className="text-decoration-none">
+              <div className="card crm-card bg-secondary text-white border-0 shadow-sm rounded-3 h-100">
+                <div className="card-body p-4">
+                  <div className="d-flex justify-content-between align-items-start">
+                    <div>
+                      <h6 className=" text-uppercase fw-bold mb-2" style={{ fontSize: '0.75rem', letterSpacing: '1px' }}>Pending Orders</h6>
+                      <h2 className="mb-0 fw-bold text-warning">{totalOrders}</h2>
+                    </div>
+                    <div className="bg-warning p-2 rounded text-dark shadow-sm">
+                      <ShoppingCart size={20} />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
 
@@ -141,7 +150,7 @@ export default async function AdminDashboard() {
               {/* The summary acts as the clickable header */}
               <summary className="card-header bg-secondary border-bottom border-secondary py-3 d-flex justify-content-between align-items-center" style={{ cursor: 'pointer', listStyle: 'none' }}>
                 <h6 className="mb-0 fw-bold d-flex align-items-center gap-2">
-                  <Activity size={18} className="text-dark" /> Recent Hangar Additions
+                  <Activity size={18} className="text-dark" /> Recent Product Additions
                 </h6>
                 <div className=" small d-flex align-items-center gap-1 hover-text-warning">
                   Toggle View <ChevronDown size={14} />
