@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { deleteUser } from "./action";
-import { prisma } from "../lib/db"; // Using relative path for safety
+import { prisma } from "@/app/lib/db";
 
 export default async function UserListPage() {
   const users = await prisma.user.findMany({
@@ -20,10 +20,10 @@ export default async function UserListPage() {
             <p className="text-muted mb-0 mt-2">Manage all registered users and admins.</p>
           </div>
           <div className="d-flex gap-3">
-            <Link href="/dashboard" className="btn btn-outline-light">
+            <Link href="/admin" className="btn btn-outline-light">
               &larr; Back
             </Link>
-            <Link href="/users/add_user" className="btn btn-primary fw-bold">
+            <Link href="/admin/users/add_user" className="btn btn-primary fw-bold">
               + Add User
             </Link>
           </div>
@@ -60,7 +60,7 @@ export default async function UserListPage() {
                     </td>
                     <td className="p-3 text-center">
                       <div className="d-flex justify-content-center gap-2">
-                        <Link href={`/users/${user.id}/edit_user`} className="btn btn-sm btn-outline-info">
+                        <Link href={`users/${user.id}/edit_user`} className="btn btn-sm btn-outline-info">
                           Edit
                         </Link>
                         <form action={deleteAction}>

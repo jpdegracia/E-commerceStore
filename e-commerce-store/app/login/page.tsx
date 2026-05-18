@@ -50,8 +50,17 @@ export default function LoginPage() {
       }));
     } else {
       toast.success("Login successful! Welcome back.", { id: loadingToast });
-      router.push("/dashboard");
+      
+      // 🚀 1. FIRST: Tell Next.js to throw away the cached Layout right now.
+      // Because signIn() just finished, Next.js will see the new cookie.
       router.refresh(); 
+      
+      // 🚀 2. SECOND: Wrap the push in a tiny delay. 
+      // This gives router.refresh exactly enough time to clear the cache 
+      // before we navigate, forcing layout.tsx to rebuild from scratch!
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 100); 
     }
   };
 

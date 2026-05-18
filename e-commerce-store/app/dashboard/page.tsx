@@ -23,11 +23,14 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
+  // 🚀 Add this! Send Admins straight to their Command Center
+  if (user.roles === "ADMIN") {
+    redirect("/admin");
+  }
+
   return (
     // Removed the pt-5 here because the layout.tsx is now handling the top padding!
-    <div className="min-vh-100 bg-dark text-white" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-      
-      {/* 🚀 Deleted the hardcoded Navbar from here because layout.tsx handles it now! 🚀 */}
+    <div className="min-vh-100 bg-dark text-white pt-5 mt-4" style={{ fontFamily: "'Montserrat', sans-serif" }}>
 
       {/* Main Dashboard Content */}
       <div className="container">

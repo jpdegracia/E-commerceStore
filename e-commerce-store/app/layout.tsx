@@ -4,47 +4,30 @@ import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Navbar from "./components/Navbar"; 
-// 🚀 Import getServerSession and your authOptions
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "./api/auth/[...nextauth]/route";
 import SessionWrapper from "./components/Providers";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
+const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Haven System",
   description: "EFSF Pilot Hangar",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   
-  // 🚀 Fetch the active NextAuth session!
-  const session = await getServerSession(authOptions);
-  
-  // Extract the user from the session (will be null if not logged in)
-  const user = session?.user || null;
-
   return (
-    <html lang="en">
-      <body className="bg-dark text-white">
-        {/* 🚀 Wrap everything in the Client Bridge */}
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col bg-dark text-white">
         <SessionWrapper>
           
-          {user && <Navbar user={user} />}
+          {/* 🚀 Look how clean this is! The Navbar manages its own visibility now */}
+          <Navbar />
           
-          <main className={user ? "pt-5 mt-4" : ""}>
+          {/* We add pt-5 directly to pages that need it now, so the layout stays simple */}
+          <main>
             {children}
           </main>
 

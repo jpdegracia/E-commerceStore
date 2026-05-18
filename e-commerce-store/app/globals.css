@@ -119,6 +119,74 @@ body {
 }
 
 
+/* CRM CARD STYLING */
+.crm-card {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  background: linear-gradient(145deg, #212529 0%, #1a1d20 100%) !important;
+}
+
+.crm-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 215, 0, 0.1) !important;
+  border-color: rgba(255, 215, 0, 0.4) !important; /* Gold/Warning accent */
+}
+
+/* Interactive Action Buttons in the Sidebar */
+.crm-action-btn {
+  transition: all 0.2s ease-in-out;
+  border-left: 3px solid transparent;
+}
+
+.crm-action-btn:hover {
+  background-color: #1a1d20 !important;
+  border-left: 3px solid #ffd700;
+  transform: translateX(4px);
+}
+
+.crm-back-link {
+  transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.crm-back-link:hover {
+  color: #ffd700 !important; /* Changes text to warning gold */
+  transform: translateX(-4px); /* Gently slides it to the left */
+}
+
+
+
+/* Sleek Table Scrollbar */
+.table-responsive::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+  background: #1a1d20;
+  border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+  background: #495057;
+  border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+  background: #ffd700;
+}
+
+/* Pilot Feed Hover Effect */
+.crm-list-item {
+  transition: background-color 0.2s ease, padding-left 0.2s ease;
+  border-left: 2px solid transparent;
+}
+
+.crm-list-item:hover {
+  background-color: #1c1f23 !important;
+  border-left: 2px solid #0dcaf0; /* Cyan accent for users */
+  padding-left: 1.5rem !important;
+}
+
+
 
 /* Animations */
 @keyframes typing {

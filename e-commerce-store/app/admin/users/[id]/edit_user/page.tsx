@@ -31,7 +31,7 @@ export default async function updateUserPage({ params }: { params: Promise<{ id:
             </h2>
             <p className="text-muted small mt-2 mb-0">Editing ID: {user.id}</p>
           </div>
-          <Link href="/users" className="btn btn-outline-light btn-sm">
+          <Link href="admin/users" className="btn btn-outline-light btn-sm">
             &larr; Cancel
           </Link>
         </div>

@@ -2,7 +2,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
-import { prisma } from "../lib/db"; // <-- Import the Prisma Client
+import { prisma } from "@/app/lib/db";
 import { Cossette_Texte } from "next/font/google";
 
 
