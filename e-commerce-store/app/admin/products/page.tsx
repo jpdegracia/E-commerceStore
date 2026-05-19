@@ -17,7 +17,7 @@ export default async function AdminProductsPage() {
 
   // Only fetch products here now, no need for categories on the table view!
   const products = await prisma.product.findMany({
-    include: { category: true },
+    include: { categories: true },
     orderBy: { createdAt: "desc" },
   });
 

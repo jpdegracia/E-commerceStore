@@ -25,7 +25,7 @@ export default function Navbar() {
 
         <div className="d-flex align-items-center gap-3 gap-md-4 ms-auto">
           
-          <Link href="/orders" className="text-warning text-decoration-none" title="Active Hangar (Orders)">
+          <Link href="/cart" className="text-warning text-decoration-none" title="Active Orders">
             <ShoppingCart size={24} />
           </Link>
           

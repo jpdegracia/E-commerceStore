@@ -15,7 +15,7 @@ type Product = {
   price: number; 
   stock: number; 
   image: string; 
-  category: { id: number; name: string }; 
+  categories: { id: number; name: string }[]; 
 };
 
 type SortColumn = "name" | "category" | "price" | "stock" | null;
@@ -36,7 +36,7 @@ export default function ProductClient({ initialProducts }: { initialProducts: Pr
     let result = initialProducts.filter((product) => {
       return (
         product.name.toLowerCase().includes(lowercasedSearch) ||
-        product.category.name.toLowerCase().includes(lowercasedSearch) ||
+        product.categories.name.toLowerCase().includes(lowercasedSearch) ||
         product.price.toString().includes(lowercasedSearch) ||
         product.stock.toString().includes(lowercasedSearch)
       );
@@ -50,8 +50,8 @@ export default function ProductClient({ initialProducts }: { initialProducts: Pr
 
         // Handle the nested category string for sorting
         if (sortColumn === "category") {
-          valueA = a.category.name.toLowerCase();
-          valueB = b.category.name.toLowerCase();
+          valueA = a.categories.name.toLowerCase();
+          valueB = b.categories.name.toLowerCase();
         } else if (typeof valueA === "string") {
           valueA = valueA.toLowerCase();
           valueB = valueB.toLowerCase();
@@ -169,7 +169,19 @@ export default function ProductClient({ initialProducts }: { initialProducts: Pr
                         <img src={product.image} alt={product.name} style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '4px' }} />
                       </td>
                       <td className="fw-bold text-success">{product.name}</td>
-                      <td><span className="badge bg-dark border border-secondary text-info">{product.category.name}</span></td>
+                      <td>
+                        <div className="d-flex flex-wrap gap-1">
+                          {product.categories.length === 0 ? (
+                            <span className="text-muted small">None</span>
+                          ) : (
+                            product.categories.map(cat => (
+                              <span key={cat.id} className="badge bg-dark border border-secondary text-info">
+                                {cat.name}
+                              </span>
+                            ))
+                          )}
+                        </div>
+                      </td>
                       <td>{product.price} PHP</td>
                       <td>
                         <span className={`badge ${product.stock > 0 ? 'bg-success' : 'bg-danger'}`}>

@@ -31,11 +31,11 @@ export default function EditProductForm({ product, categories }: { product: any,
     <>
       <Toaster position="bottom-right" />
       <div className="mb-4">
-        <Link href="/admin/products" className="crm-back-link text-white  d-inline-flex align-items-center gap-2">
-          <ArrowLeft size={16} />
-          <span className="small fw-bold text-uppercase">Back to Inventory</span>
-        </Link>
-      </div>
+          <Link href="/admin/products" className="crm-back-link text-white btn btn-secondary d-inline-flex align-items-center gap-2">
+            <ArrowLeft size={16} />
+            <span className="small fw-bold text-uppercase">Back to Product Inventory</span>
+          </Link>
+        </div>
 
       <div className="card crm-card text-white border-secondary shadow-lg">
         <div className="card-header border-bottom border-dark bg-dark py-4 px-4 d-flex align-items-center gap-3">
@@ -51,10 +51,37 @@ export default function EditProductForm({ product, categories }: { product: any,
                 <input type="text" name="name" defaultValue={product.name} className="form-control bg-dark text-white border-secondary" required />
               </div>
               <div className="col-md-6">
-                <label className="form-label small fw-bold  text-uppercase">Classification</label>
-                <select name="categoryId" defaultValue={product.categoryId} className="form-select bg-dark text-white border-secondary" required>
-                  {categories.map((cat) => <option key={cat.id} value={cat.id}>{cat.name}</option>)}
-                </select>
+                <label className="form-label small fw-bold text-white text-uppercase mb-2">Classifications</label>
+                
+                {/* 🚀 THE FIX: Fixed height container with vertical scrolling */}
+                <div 
+                  className="bg-dark border border-secondary rounded p-2 crm-custom-scrollbar" 
+                  style={{ maxHeight: '120px', overflowY: 'auto' }}
+                >
+                  <div className="d-flex flex-column gap-1">
+                    {categories.map((cat) => {
+                      // Keep your existing check logic!
+                      const isChecked = (product.categories || []).some((pc: any) => pc.id === cat.id);
+                      return (
+                        <div key={cat.id} className="form-check m-0 px-3 py-1 rounded category-list-item d-flex align-items-center">
+                          <input 
+                            className="form-check-input border-secondary shadow-none m-0" 
+                            type="checkbox" 
+                            name="categoryIds" 
+                            value={cat.id} 
+                            id={`cat-${cat.id}`} 
+                            defaultChecked={isChecked} 
+                            style={{ cursor: 'pointer' }}
+                          />
+                          {/* w-100 makes the whole row clickable! */}
+                          <label className="form-check-label small text-white ms-2 w-100 user-select-none" htmlFor={`cat-${cat.id}`} style={{ cursor: 'pointer' }}>
+                            {cat.name}
+                          </label>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
             </div>
 

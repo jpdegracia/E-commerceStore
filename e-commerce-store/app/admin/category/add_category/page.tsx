@@ -36,10 +36,7 @@ export default function AddCategoryPage() {
         
         {/* CRM Back Button */}
         <div className="mb-4">
-          <Link 
-            href="/admin/category" 
-            className="crm-back-link text-decoration-none text-white d-inline-flex align-items-center gap-2"
-          >
+          <Link href="/admin" className="crm-back-link text-white btn btn-secondary d-inline-flex align-items-center gap-2">
             <ArrowLeft size={16} />
             <span className="small fw-bold text-uppercase">Back to Classifications</span>
           </Link>

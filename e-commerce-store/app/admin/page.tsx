@@ -40,7 +40,7 @@ export default async function AdminDashboard() {
   const recentProducts = await prisma.product.findMany({
     take: 5,
     orderBy: { createdAt: "desc" },
-    include: { category: true }
+    include: { categories: true }
   });
 
   return (
@@ -177,7 +177,19 @@ export default async function AdminDashboard() {
                         recentProducts.slice(0, 5).map(product => (
                           <tr key={product.id} className="align-middle">
                             <td className="ps-4 py-3 fw-bold">{product.name}</td>
-                            <td><span className="badge bg-dark border border-secondary text-info">{product.category.name}</span></td>
+                            <td>
+                              <div className="d-flex flex-wrap gap-1">
+                                {product.categories.length === 0 ? (
+                                  <span className="badge bg-dark border border-secondary text-muted">None</span>
+                                ) : (
+                                  product.categories.map(cat => (
+                                    <span key={cat.id} className="badge bg-dark border border-secondary text-info">
+                                      {cat.name}
+                                    </span>
+                                  ))
+                                )}
+                              </div>
+                            </td>
                             <td>{product.price} PHP</td>
                             <td>
                               <span className={`badge ${product.stock > 0 ? 'bg-success' : 'bg-danger'}`}>

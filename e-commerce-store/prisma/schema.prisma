@@ -9,6 +9,13 @@ enum Role {
   ADMIN
 }
 
+enum OrderStatus {
+  PENDING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
 model User {
   id          Int      @id @default(autoincrement())
   email       String   @unique
@@ -16,7 +23,8 @@ model User {
   username    String   @unique
   name        String
   roles       Role     @default(USER)
-  orders      Order[]  // <--- Add this
+  orders      Order[]  
+  cart        Cart?
   isActive    Boolean  @default(false)
   isVerified  Boolean  @default(false)
   createdAt   DateTime @default(now())
@@ -40,14 +48,16 @@ model Product {
   name        String
   description String
   price       Int
-  categoryId  Int
-  category    Category @relation(fields: [categoryId], references: [id])
+  categories  Category[]
   stock       Int
   image       String
-  orders      Order[]  // <--- Add this
+  cartItems   CartItem[]  //  Added: Opposite relation for CartItem
+  orderItems  OrderItem[] //  Added: Opposite relation for OrderItem
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+
 
 model Category {
   id          Int      @id @default(autoincrement())
@@ -59,16 +69,46 @@ model Category {
   updatedAt   DateTime @updatedAt
 }
 
-model Order {
+// --- THE CART SYSTEM (Temporary holding area) ---
+
+model Cart {
+  id        Int        @id @default(autoincrement())
+  userId    Int        @unique // One user has exactly ONE active cart
+  user      User       @relation(fields: [userId], references: [id])
+  items     CartItem[]
+  updatedAt DateTime   @updatedAt
+}
+
+model CartItem {
   id        Int      @id @default(autoincrement())
-  userId    Int
-  user      User     @relation(fields: [userId], references: [id])
+  cartId    Int
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
   productId Int
-  product   Product  @relation(fields: [productId], references: [id])
-  quantity  Int
-  status    String   @default("pending")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity  Int      @default(1)
+}
+
+
+// --- THE ORDER SYSTEM (Permanent historical record) ---
+
+model Order {
+  id          Int         @id @default(autoincrement())
+  userId      Int
+  user        User        @relation(fields: [userId], references: [id])
+  totalAmount Int         // The total cost of everything combined
+  status      OrderStatus @default(PENDING)
+  items       OrderItem[]
+  createdAt   DateTime    @default(now())
+}
+
+model OrderItem {
+  id          Int      @id @default(autoincrement())
+  orderId     Int
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId   Int
+  product     Product  @relation(fields: [productId], references: [id])
+  quantity    Int
+  priceAtTime Int      
 }
 
 datasource db {

@@ -43,12 +43,9 @@ export default async function UserCategoryPage({ params }: { params: Promise<{ i
         
         {/* Back Button */}
         <div className="mb-4">
-          <Link 
-            href="/dashboard" 
-            className="text-decoration-none text-white d-inline-flex align-items-center gap-2 hover-text-warning transition-all"
-          >
+          <Link href="/admin" className="crm-back-link text-white btn btn-secondary d-inline-flex align-items-center gap-2">
             <ArrowLeft size={16} />
-            <span className="small fw-bold text-uppercase">Back to Hangar</span>
+            <span className="small fw-bold text-uppercase">Back to Products</span>
           </Link>
         </div>
 

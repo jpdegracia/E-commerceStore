@@ -8,7 +8,7 @@ export default async function EditProductPage({ params }: { params: Promise<{ id
   
   if (isNaN(productId)) redirect("/admin/products");
 
-  const product = await prisma.product.findUnique({ where: { id: productId } });
+  const product = await prisma.product.findUnique({ where: { id: productId }, include: { categories: true } });
   if (!product) redirect("/admin/products");
 
   const categories = await prisma.category.findMany({ orderBy: { name: "asc" } });

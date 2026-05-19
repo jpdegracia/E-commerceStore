@@ -4,6 +4,9 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import Link from "next/link";
 import { ShoppingCart, Grid, Rocket } from "lucide-react";
+import CategorySlider from "./CategorySlider";
+import { addToCart } from "../cart/action";
+import AcquireButton from "./AcquireButton";
 
 // Quick utility to shuffle our product array randomly
 function shuffleArray<T>(array: T[]): T[] {
@@ -46,7 +49,7 @@ export default async function DashboardPage() {
   // Get products, filter out anything with 0 stock, and include category details
   const allProducts = await prisma.product.findMany({
     where: { stock: { gt: 0 } },
-    include: { category: true },
+    include: { categories: true },
   });
 
   // Randomize the products and take the first 12 for the dashboard showcase
@@ -71,9 +74,18 @@ export default async function DashboardPage() {
                 <p className="lead text-light mb-4 opacity-75">
                   Secure connection established. Hangar inventory is ready for deployment.
                 </p>
-                <button className="btn btn-info fw-bold px-4 py-2 text-dark rounded-pill shadow">
-                  View Orders
-                </button>
+                <div className="mx-4 d-flex gap-2">
+                  <Link href="/dashboard/orders">
+                    <button className="btn btn-info fw-bold px-4 py-2 text-dark shadow">
+                      View Orders
+                    </button>
+                  </Link>
+                  <Link href="/cart">
+                    <button className="btn btn-warning fw-bold px-4 py-2 text-dark shadow">
+                      View Cart
+                    </button>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -81,37 +93,15 @@ export default async function DashboardPage() {
 
         {/* 🚀 CATEGORIES SECTION */}
         <div className="mb-5">
-          <div className="d-flex align-items-center gap-2 mb-4">
+          <div className="d-flex align-items-center gap-2 mb-3">
             <Grid className="text-info" size={24} />
             <h3 className="mb-0 fw-bold" style={{ fontFamily: '"Press Start 2P", cursive', fontSize: '1rem' }}>
               BROWSE CLASSIFICATIONS
             </h3>
           </div>
           
-          <div className="row g-4">
-            {categories.length === 0 ? (
-              <div className="col-12 text-muted text-center py-4 border border-secondary rounded">No classifications available.</div>
-            ) : (
-              categories.map((cat) => (
-                <div key={cat.id} className="col-6 col-md-4 col-lg-3">
-                  <Link href={`/dashboard/category/${cat.id}`} className="text-decoration-none">
-                    {/* 🚀 FIXED: Removed JS event handlers and added .crm-hover-lift */}
-                    <div className="card crm-hover-lift bg-secondary border-0 shadow-sm rounded-4 overflow-hidden h-100">
-                      <img 
-                        src={cat.image} 
-                        alt={cat.name} 
-                        className="card-img-top" 
-                        style={{ height: '140px', objectFit: 'cover' }} 
-                      />
-                      <div className="card-body bg-dark text-center py-3">
-                        <h6 className="mb-0 fw-bold text-white">{cat.name}</h6>
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-              ))
-            )}
-          </div>
+          {/* 🚀 Our 2-Row Slider */}
+          <CategorySlider categories={categories} />
         </div>
 
         {/* 🚀 RANDOMIZED PRODUCTS SECTION */}
@@ -142,9 +132,20 @@ export default async function DashboardPage() {
                         className="card-img-top" 
                         style={{ height: '220px', objectFit: 'cover' }} 
                       />
-                      <span className="position-absolute top-0 end-0 m-2 badge bg-dark border border-secondary text-info">
-                        {product.category.name}
-                      </span>
+                      {/* Maps through all attached categories and stacks them */}
+                      <div className="position-absolute top-0 end-0 m-2 d-flex flex-column gap-1 align-items-end">
+                        {product.categories.length === 0 ? (
+                          <span className="badge bg-dark border border-secondary text-muted shadow-sm">
+                            Uncategorized
+                          </span>
+                        ) : (
+                          product.categories.map(cat => (
+                            <span key={cat.id} className="badge bg-dark border border-secondary text-info shadow-sm">
+                              {cat.name}
+                            </span>
+                          ))
+                        )}
+                      </div>
                     </div>
 
                     {/* Product Details */}
@@ -153,12 +154,8 @@ export default async function DashboardPage() {
                       <p className="card-text text-warning fw-bold mb-3 fs-5 mt-auto">
                         {product.price.toLocaleString()} PHP
                       </p>
-                      
-                      {/* Action Button */}
-                      <button className="btn btn-outline-info w-100 fw-bold d-flex align-items-center justify-content-center gap-2 mt-auto">
-                        <ShoppingCart size={16} /> 
-                        Acquire Unit
-                      </button>
+                      <AcquireButton productId={product.id} />
+
                     </div>
                   </div>
                 </div>
